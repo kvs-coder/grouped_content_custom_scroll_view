@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - 19.08.2020.
 
-* TODO: Describe initial release.
+* Initial release. The Widget for making a grouped SliverList with Header/Entry content.
