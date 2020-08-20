@@ -9,3 +9,7 @@
 ## [1.0.2] - 20.08.2020.
 
 * Provide example.
+
+## [1.0.3] - 20.08.2020.
+
+* Provide a valid description in pubspec.yaml file.
