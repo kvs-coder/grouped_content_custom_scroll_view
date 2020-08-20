@@ -5,3 +5,7 @@
 ## [1.0.1] - 20.08.2020.
 
 * Make SliverList instead SliverFixedExtentList.
+
+## [1.0.2] - 20.08.2020.
+
+* Provide example.
