@@ -25,23 +25,22 @@ const double _kMinHeightDim = 40.0;
 class SliverGroupedList<Header, Entry> extends StatelessWidget {
   const SliverGroupedList(
       {Key key,
-      this.data,
-      this.bodyHeaderBuilder,
-      this.bodyEntryBuilder,
-      this.onItemTap,
-      this.itemExtent,
-      this.header,
-      this.footer,
-      this.controller,
-      this.primary,
-      this.physics,
-      this.center,
-      this.cacheExtent,
-      this.semanticChildCount,
-      this.scrollDirection = Axis.vertical,
-      this.reverse = false,
-      this.shrinkWrap = false,
-      this.anchor = 0.0})
+        this.data,
+        this.bodyHeaderBuilder,
+        this.bodyEntryBuilder,
+        this.onItemTap,
+        this.header,
+        this.footer,
+        this.controller,
+        this.primary,
+        this.physics,
+        this.center,
+        this.cacheExtent,
+        this.semanticChildCount,
+        this.scrollDirection = Axis.vertical,
+        this.reverse = false,
+        this.shrinkWrap = false,
+        this.anchor = 0.0})
       : super(key: key);
 
   /// [bodyHeaderBuilder] is mandatory and should not be null
@@ -65,10 +64,6 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   /// [onItemTap] on tap event callback
   @required
   final Function(Entry item) onItemTap;
-
-  /// [itemExtent] will handle how large will be the height of an item extended
-  /// by default if not set equals [_kMaxHeightDim].
-  final double itemExtent;
 
   /// [header] provide additional Sliver related widget to
   /// display content above body.
@@ -94,11 +89,11 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(data != null,
-        '$runtimeType Data should not be null, please provide valid Data');
+    '$runtimeType Data should not be null, please provide valid Data');
     assert(bodyHeaderBuilder != null,
-        '$runtimeType headerBuilder should not be null');
+    '$runtimeType headerBuilder should not be null');
     assert(bodyEntryBuilder != null,
-        '$runtimeType runtimeType should not be null');
+    '$runtimeType runtimeType should not be null');
     return Builder(builder: (context) {
       var widgetList = <Widget>[];
       if (header != null) {
@@ -111,10 +106,7 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
               maxHeight: _kMaxHeightDim,
               child: bodyHeaderBuilder(context, key)))
           ..add(_SliverGroupedEntry(
-              entry: value,
-              builder: bodyEntryBuilder,
-              itemExtent: itemExtent ?? _kMaxHeightDim,
-              onItemTap: onItemTap));
+              entry: value, builder: bodyEntryBuilder, onItemTap: onItemTap));
       });
       if (footer != null) {
         widgetList.add(footer);
@@ -146,8 +138,7 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
 /// to call [onItemTap] callback if [GestureDetector] detects
 /// onTap event
 class _SliverGroupedEntry<Entry> extends StatelessWidget {
-  const _SliverGroupedEntry(
-      {Key key, this.entry, this.itemExtent, this.onItemTap, this.builder})
+  const _SliverGroupedEntry({Key key, this.entry, this.onItemTap, this.builder})
       : super(key: key);
 
   /// [entry] is mandatory and should not be null
@@ -166,18 +157,13 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
   @required
   final Widget Function(BuildContext context, Entry item) builder;
 
-  /// [itemExtent] will handle how large will be the height of an item extended
-  /// by default if not set equals [_kMaxHeightDim].
-  final double itemExtent;
-
   @override
   Widget build(BuildContext context) {
     assert(entry != null,
-        '$runtimeType List<Entry> should not be null, please provide valid List<Entry>');
+    '$runtimeType List<Entry> should not be null, please provide valid List<Entry>');
     assert(builder != null,
-        '$runtimeType builder should not be null for creating a dynamic grouped list');
-    return SliverFixedExtentList(
-      itemExtent: itemExtent,
+    '$runtimeType builder should not be null for creating a dynamic grouped list');
+    return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
         final item = entry[index];
         return GestureDetector(
