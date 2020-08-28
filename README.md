@@ -116,3 +116,4 @@ class MyHomePage extends StatelessWidget {
   }
 }
 ```
+Under <a href=https://github.com/VictorKachalov/sliver_grouped_list/blob/master/LICENSE>MIT License</a>
