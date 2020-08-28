@@ -4,5 +4,5 @@ SliverGroupedList Widget
 
 ## Getting Started
 
-Install the package in <i>pubspec.yaml</i>
+Build a beautiful sliver with a custom header, footer and body, which can be divided by groups with a header for each group and a list of entries.
 

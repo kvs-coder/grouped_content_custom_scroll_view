@@ -26,6 +26,10 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   const SliverGroupedList(
       {Key key,
       this.data,
+      this.bodyHeaderPinned = false,
+      this.bodyHeaderFloating = false,
+      this.bodyHeaderMinHeight = _kMinHeightDim,
+      this.bodyHeaderMaxHeight = _kMaxHeightDim,
       this.bodyHeaderBuilder,
       this.bodyEntryBuilder,
       this.onItemTap,
@@ -42,6 +46,24 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
       this.shrinkWrap = false,
       this.anchor = 0.0})
       : super(key: key);
+
+  /// Set [bodyHeaderMinHeight] and [bodyHeaderMaxHeight]
+  /// to make collapsable header for entry
+  /// [bodyHeaderMinHeight] is 40.0 by default
+  /// [bodyHeaderMaxHeight] is 50.0 by default
+  final double bodyHeaderMinHeight;
+  final double bodyHeaderMaxHeight;
+
+  /// Set [bodyHeaderPinned] to pin header and
+  /// to enable/prevent dismissing by scrolling
+  /// by default is set to false
+  final bool bodyHeaderPinned;
+
+  /// Set [bodyHeaderFloating] to
+  /// toggle visibility of top header of the first group
+  /// of elements
+  /// by default is set to false
+  final bool bodyHeaderFloating;
 
   /// [bodyHeaderBuilder] is mandatory and should not be null
   /// assertion is used to check the nullability of the
@@ -102,8 +124,10 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
       data.forEach((key, value) {
         widgetList
           ..add(_SliverGroupedHeader(
-              minHeight: _kMinHeightDim,
-              maxHeight: _kMaxHeightDim,
+              minHeight: bodyHeaderMinHeight,
+              maxHeight: bodyHeaderMaxHeight,
+              pinned: bodyHeaderPinned,
+              floating: bodyHeaderFloating,
               child: bodyHeaderBuilder(context, key)))
           ..add(_SliverGroupedEntry(
               entry: value, builder: bodyEntryBuilder, onItemTap: onItemTap));
@@ -177,7 +201,12 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
 ///
 class _SliverGroupedHeader extends StatelessWidget {
   const _SliverGroupedHeader(
-      {Key key, this.minHeight, this.maxHeight, this.child})
+      {Key key,
+      this.minHeight,
+      this.maxHeight,
+      this.child,
+      this.pinned,
+      this.floating})
       : super(key: key);
 
   @required
@@ -186,11 +215,14 @@ class _SliverGroupedHeader extends StatelessWidget {
   final double maxHeight;
   @required
   final Widget child;
+  final bool pinned;
+  final bool floating;
 
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
-        pinned: false,
+        pinned: pinned,
+        floating: floating,
         delegate: _SliverHeaderDelegate(
           minHeight: minHeight,
           maxHeight: maxHeight,

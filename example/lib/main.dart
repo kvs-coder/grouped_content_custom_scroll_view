@@ -28,7 +28,9 @@ class MyHomePage extends StatelessWidget {
       ),
       body: SliverGroupedList<String, String>(
         data: {
-          'A': ['My best friend', 'Good friend of mine', 'Guy I do not know']
+          'A': ['My best friend', 'Good friend of mine', 'Guy I do not know'],
+          'B': ['My cat', 'My dog', 'My fish', 'My bird'],
+          'C': ['My mom', 'My dad', 'My sis']
         },
         header: SliverGrid.count(
           crossAxisCount: 3,
@@ -44,6 +46,10 @@ class MyHomePage extends StatelessWidget {
             Container(color: Colors.white, height: 150.0),
           ],
         ),
+        bodyHeaderMinHeight: 60.0,
+        bodyHeaderMaxHeight: 100.0,
+        bodyHeaderPinned: true,
+        bodyHeaderFloating: false,
         bodyHeaderBuilder: (_, header) => Container(
           alignment: Alignment.center,
           child: Text(
