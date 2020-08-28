@@ -32,7 +32,7 @@ body: SliverGroupedList<Header, Entry>()
 Implement all required constructor parameters.
 
 As a result the custom scroll view will contain the content of the passed data.
-Optionally you may add a <b>RenderObjectWidget</b> widget like <b>SliverGrid</b> or <b>SliverGrid</b> header section to the scroll view, and a footer as well.
+Optionally you may add a <b>RenderObjectWidget</b> widget like <b>SliverGrid</b> or <b>SliverList</b> header section to the scroll view, and a footer as well.
 
 Here is an example which is displayed in the GIF from above.
 
