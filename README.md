@@ -8,20 +8,31 @@ Build a beautiful sliver with a custom header, footer and body, which can be div
 
 ## Getting Started
 
-- Go inside pubspec.yaml file<br/>
-- Add this to your package's pubspec.yaml file:<br/>
-<i>dependencies:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sliver_grouped_list: ^1.0.3</i>
+- Go inside pubspec.yaml file
+- Add this to your package's pubspec.yaml file: 
+``` Dart
+dependencies:
+     sliver_grouped_list: ^1.0.4
+```
 - Run <b>flutter pub get</b>
 
 ## How to use
 
-Go to your widget .dart file and do import<br/>
-<b>import 'package:sliver_grouped_list/sliver_grouped_list.dart';</b>
-
+Go to your widget .dart file and do import
+``` Dart
+import 'package:sliver_grouped_list/sliver_grouped_list.dart';
+```
 Inside your widget's <b>Widget build(BuildContext context)</b> method
-set as body the <b>SliverGroupedList</b> and implement all required constructor parameters.
+set as body the <b>SliverGroupedList</b> with explicitly showing the types of bodyHeader and bodyEntry.
+``` Dart
+// [Header] is the type of a group header
+// [Entry] is the type of every entry in the list related to the group
+body: SliverGroupedList<Header, Entry>()
+```
+Implement all required constructor parameters.
+
 As a result the custom scroll view will contain the content of the passed data.
-Optionally you may add a <b>RenderObjectWidget</b> widget like <b>SliverGrid</b> or <b>SliverGrid</b> header section to the scroll view, and a footer as well.<br/>
+Optionally you may add a <b>RenderObjectWidget</b> widget like <b>SliverGrid</b> or <b>SliverGrid</b> header section to the scroll view, and a footer as well.
 
 Here is an example which is displayed in the GIF from above.
 

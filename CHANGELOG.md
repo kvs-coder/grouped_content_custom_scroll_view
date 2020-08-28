@@ -16,4 +16,8 @@
 
 ## [1.0.4] - 28.08.2020.
 
-* More properties to set up for a group's body entry header
+* More properties to set up for a group's body entry header.
+
+## [1.0.5] - 28.08.2020.
+
+* Better documentation.
