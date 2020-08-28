@@ -25,14 +25,14 @@ const double _kMinHeightDim = 40.0;
 class SliverGroupedList<Header, Entry> extends StatelessWidget {
   const SliverGroupedList(
       {Key key,
-      this.data,
+      @required this.data,
       this.bodyHeaderPinned = false,
       this.bodyHeaderFloating = false,
       this.bodyHeaderMinHeight = _kMinHeightDim,
       this.bodyHeaderMaxHeight = _kMaxHeightDim,
-      this.bodyHeaderBuilder,
-      this.bodyEntryBuilder,
-      this.onItemTap,
+      @required this.bodyHeaderBuilder,
+      @required this.bodyEntryBuilder,
+      @required this.onItemTap,
       this.header,
       this.footer,
       this.controller,
@@ -68,32 +68,28 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   /// [bodyHeaderBuilder] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  @required
   final Widget Function(BuildContext context, Header header) bodyHeaderBuilder;
 
   /// [bodyEntryBuilder] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  @required
   final Widget Function(BuildContext context, Entry item) bodyEntryBuilder;
 
   /// [data] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  @required
   final Map<Header, List<Entry>> data;
 
   /// [onItemTap] on tap event callback
-  @required
   final Function(Entry item) onItemTap;
 
   /// [header] provide additional Sliver related widget to
   /// display content above body.
-  final Widget header;
+  final RenderObjectWidget header;
 
   /// [footer] provide additional Sliver related widget to
   /// display content under body.
-  final Widget footer;
+  final RenderObjectWidget footer;
 
   /// Properties of [CustomScrollView]
   final Axis scrollDirection;
@@ -162,23 +158,24 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
 /// to call [onItemTap] callback if [GestureDetector] detects
 /// onTap event
 class _SliverGroupedEntry<Entry> extends StatelessWidget {
-  const _SliverGroupedEntry({Key key, this.entry, this.onItemTap, this.builder})
+  const _SliverGroupedEntry(
+      {Key key,
+      @required this.entry,
+      @required this.onItemTap,
+      @required this.builder})
       : super(key: key);
 
   /// [entry] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  @required
   final List<Entry> entry;
 
   /// [onItemTap] is mandatory and should not be null
-  @required
   final Function(Entry item) onItemTap;
 
   /// [builder] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  @required
   final Widget Function(BuildContext context, Entry item) builder;
 
   @override
@@ -202,18 +199,15 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
 class _SliverGroupedHeader extends StatelessWidget {
   const _SliverGroupedHeader(
       {Key key,
-      this.minHeight,
-      this.maxHeight,
-      this.child,
+      @required this.minHeight,
+      @required this.maxHeight,
+      @required this.child,
       this.pinned,
       this.floating})
       : super(key: key);
 
-  @required
   final double minHeight;
-  @required
   final double maxHeight;
-  @required
   final Widget child;
   final bool pinned;
   final bool floating;
@@ -235,17 +229,14 @@ class _SliverGroupedHeader extends StatelessWidget {
 ///
 /// Will allow to display expendables Headers
 class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
-  @required
   final double minHeight;
-  @required
   final double maxHeight;
-  @required
   final Widget child;
 
   _SliverHeaderDelegate({
-    this.minHeight,
-    this.maxHeight,
-    this.child,
+    @required this.minHeight,
+    @required this.maxHeight,
+    @required this.child,
   });
 
   @override

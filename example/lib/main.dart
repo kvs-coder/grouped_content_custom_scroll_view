@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  static const double _kHeight = 150.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,15 +37,15 @@ class MyHomePage extends StatelessWidget {
         header: SliverGrid.count(
           crossAxisCount: 3,
           children: [
-            Container(color: Colors.white, height: 150.0),
-            Container(color: Colors.black, height: 150.0),
-            Container(color: Colors.grey, height: 150.0),
-            Container(color: Colors.grey, height: 150.0),
-            Container(color: Colors.white, height: 150.0),
-            Container(color: Colors.black, height: 150.0),
-            Container(color: Colors.black, height: 150.0),
-            Container(color: Colors.grey, height: 150.0),
-            Container(color: Colors.white, height: 150.0),
+            Container(color: Colors.white, height: _kHeight),
+            Container(color: Colors.black, height: _kHeight),
+            Container(color: Colors.grey, height: _kHeight),
+            Container(color: Colors.grey, height: _kHeight),
+            Container(color: Colors.white, height: _kHeight),
+            Container(color: Colors.black, height: _kHeight),
+            Container(color: Colors.black, height: _kHeight),
+            Container(color: Colors.grey, height: _kHeight),
+            Container(color: Colors.white, height: _kHeight),
           ],
         ),
         bodyHeaderMinHeight: 60.0,
@@ -61,7 +63,7 @@ class MyHomePage extends StatelessWidget {
         bodyEntryBuilder: (_, item) => Card(
             color: Colors.lightBlueAccent,
             child: Container(
-                height: 150,
+                height: _kHeight,
                 alignment: Alignment.center,
                 child: Text(
                   item,
@@ -69,7 +71,7 @@ class MyHomePage extends StatelessWidget {
                 ))),
         onItemTap: (item) => print(item),
         footer: SliverFixedExtentList(
-          itemExtent: 150.0,
+          itemExtent: _kHeight,
           delegate: SliverChildListDelegate(
             [
               Container(color: Colors.black),
