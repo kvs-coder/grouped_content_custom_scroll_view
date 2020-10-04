@@ -99,16 +99,21 @@ class MyHomePage extends StatelessWidget {
           ),
           color: Colors.blue,
         ),
-        bodyEntryBuilder: (_, item) => Card(
-            color: Colors.lightBlueAccent,
-            child: Container(
-                height: _kHeight,
-                alignment: Alignment.center,
-                child: Text(
-                  item,
-                  style: TextStyle(color: Colors.white),
-                ))),
-        onItemTap: (item) => print(item),
+        bodyEntryBuilder: (_, index, item) => GestureDetector(
+          onTap: () {
+            print(item);
+            print(index);
+          },
+          child: Card(
+              color: Colors.lightBlueAccent,
+              child: Container(
+                  height: _kHeight,
+                  alignment: Alignment.center,
+                  child: Text(
+                    item,
+                    style: TextStyle(color: Colors.white),
+                  ))),
+        ),
         footer: SliverFixedExtentList(
           itemExtent: _kHeight,
           delegate: SliverChildListDelegate(

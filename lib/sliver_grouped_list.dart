@@ -32,7 +32,6 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
       this.bodyHeaderMaxHeight = _kMaxHeightDim,
       @required this.bodyHeaderBuilder,
       @required this.bodyEntryBuilder,
-      @required this.onItemTap,
       this.header,
       this.footer,
       this.controller,
@@ -73,15 +72,13 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   /// [bodyEntryBuilder] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  final Widget Function(BuildContext context, Entry item) bodyEntryBuilder;
+  final Widget Function(BuildContext context, int index, Entry item)
+      bodyEntryBuilder;
 
   /// [data] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
   final Map<Header, List<Entry>> data;
-
-  /// [onItemTap] on tap event callback
-  final Function(Entry item) onItemTap;
 
   /// [header] provide additional Sliver related widget to
   /// display content above body.
@@ -125,8 +122,7 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
               pinned: bodyHeaderPinned,
               floating: bodyHeaderFloating,
               child: bodyHeaderBuilder(context, key)))
-          ..add(_SliverGroupedEntry(
-              entry: value, builder: bodyEntryBuilder, onItemTap: onItemTap));
+          ..add(_SliverGroupedEntry(entry: value, builder: bodyEntryBuilder));
       });
       if (footer != null) {
         widgetList.add(footer);
@@ -159,10 +155,7 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
 /// onTap event
 class _SliverGroupedEntry<Entry> extends StatelessWidget {
   const _SliverGroupedEntry(
-      {Key key,
-      @required this.entry,
-      @required this.onItemTap,
-      @required this.builder})
+      {Key key, @required this.entry, @required this.builder})
       : super(key: key);
 
   /// [entry] is mandatory and should not be null
@@ -170,13 +163,10 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
   /// property and will show a stacktrace
   final List<Entry> entry;
 
-  /// [onItemTap] is mandatory and should not be null
-  final Function(Entry item) onItemTap;
-
   /// [builder] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  final Widget Function(BuildContext context, Entry item) builder;
+  final Widget Function(BuildContext context, int index, Entry item) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -187,8 +177,7 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
         final item = entry[index];
-        return GestureDetector(
-            onTap: () => onItemTap(item), child: builder(context, item));
+        return builder(context, index, item);
       }, childCount: entry.length),
     );
   }

@@ -21,3 +21,8 @@
 ## [1.0.5] - 28.08.2020.
 
 * Better documentation.
+
+## [1.1.0] - 04.10.2020.
+
+* Removed GestureDetector. Should be implemented on customer side.
+* Provide index in _bodyEntryBuilder_ 
