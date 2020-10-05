@@ -32,6 +32,7 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
       this.bodyHeaderMaxHeight = _kMaxHeightDim,
       @required this.bodyHeaderBuilder,
       @required this.bodyEntryBuilder,
+      this.appBar,
       this.header,
       this.footer,
       this.controller,
@@ -80,6 +81,10 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   /// property and will show a stacktrace
   final Map<Header, List<Entry>> data;
 
+  /// [appBar] provide additional Sliver related widget to
+  /// display content above header as an app bar.
+  final Widget appBar;
+
   /// [header] provide additional Sliver related widget to
   /// display content above body.
   final RenderObjectWidget header;
@@ -111,6 +116,9 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
         '$runtimeType runtimeType should not be null');
     return Builder(builder: (context) {
       var widgetList = <Widget>[];
+      if (appBar != null) {
+        widgetList.add(appBar);
+      }
       if (header != null) {
         widgetList.add(header);
       }

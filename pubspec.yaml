@@ -1,6 +1,6 @@
 name: sliver_grouped_list
 description: SliverGroupedList Widget. Build a beautiful Table based on Sliver Widgets with entries group by headers.
-version: 1.1.0
+version: 1.1.1
 homepage: https://github.com/VictorKachalov/sliver_grouped_list
 
 environment:

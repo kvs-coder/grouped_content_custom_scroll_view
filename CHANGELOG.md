@@ -26,3 +26,7 @@
 
 * Removed GestureDetector. Should be implemented on customer side.
 * Provide index in _bodyEntryBuilder_ 
+
+## [1.1.1] - 05.10.2020.
+
+* SliverAppBar support

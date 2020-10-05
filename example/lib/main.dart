@@ -34,6 +34,11 @@ class MyHomePage extends StatelessWidget {
           'B': ['My cat', 'My dog', 'My fish', 'My bird'],
           'C': ['My mom', 'My dad', 'My sis']
         },
+        appBar: SliverAppBar(
+          title: Text('SliverAppBar'),
+          backgroundColor: Colors.green,
+          expandedHeight: 200.0,
+        ),
         header: SliverGrid.count(
           crossAxisCount: 3,
           children: [
