@@ -4,7 +4,7 @@ SliverGroupedList Widget
 
 Build a beautiful sliver with a custom header, footer and body, which can be divided by groups with a header for each group and a list of entries.
 
-![Alt Text](assets/demo.gif)
+<img src="assets/demo.gif" width="250" height="250"/>
 
 ## Getting Started
 
