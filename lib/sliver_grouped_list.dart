@@ -14,6 +14,7 @@ const double _kMinHeightDim = 40.0;
 ///
 /// For every [_SliverGroupedHeader] and [_SliverGroupedEntry] a separate
 /// builder method is created: [bodyHeaderBuilder] and [bodyEntryBuilder]
+/// if no entries, [bodyPlaceholderBuilder] is created
 ///
 /// [data] is based on provided [Header] and [Entry] types.
 ///
@@ -32,6 +33,7 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
       this.bodyHeaderMaxHeight = _kMaxHeightDim,
       @required this.bodyHeaderBuilder,
       @required this.bodyEntryBuilder,
+      this.bodyPlaceholderBuilder,
       this.appBar,
       this.header,
       this.footer,
@@ -75,6 +77,10 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   /// property and will show a stacktrace
   final Widget Function(BuildContext context, int index, Entry item)
       bodyEntryBuilder;
+
+  /// [bodyPlaceholderBuilder] will be used when no elements are available
+  /// for a certain key
+  final Widget Function(BuildContext context) bodyPlaceholderBuilder;
 
   /// [data] is mandatory and should not be null
   /// assertion is used to check the nullability of the
@@ -130,7 +136,10 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
               pinned: bodyHeaderPinned,
               floating: bodyHeaderFloating,
               child: bodyHeaderBuilder(context, key)))
-          ..add(_SliverGroupedEntry(entry: value, builder: bodyEntryBuilder));
+          ..add(value.length > 0
+              ? _SliverGroupedEntry(entry: value, builder: bodyEntryBuilder)
+              : SliverToBoxAdapter(
+                  child: Builder(builder: bodyPlaceholderBuilder)));
       });
       if (footer != null) {
         widgetList.add(footer);
