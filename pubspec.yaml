@@ -1,11 +1,11 @@
 name: sliver_grouped_list
 description: SliverGroupedList Widget. Build a beautiful Table based on Sliver Widgets with entries group by headers.
-version: 1.1.2
+version: 1.1.2-nullsafety.0
 homepage: https://github.com/VictorKachalov/sliver_grouped_list
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:

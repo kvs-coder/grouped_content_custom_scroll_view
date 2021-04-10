@@ -71,7 +71,7 @@ class MyHomePage extends StatelessWidget {
                 height: _kHeight,
                 alignment: Alignment.center,
                 child: Text(
-                  "There are no items available in ${header}",
+                  "There are no items available in $header",
                   style: TextStyle(color: Colors.grey),
                 ))),
         bodyEntryBuilder: (_, index, item) => GestureDetector(

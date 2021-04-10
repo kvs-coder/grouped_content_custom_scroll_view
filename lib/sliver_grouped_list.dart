@@ -25,15 +25,15 @@ const double _kMinHeightDim = 40.0;
 /// the tapped item as a parameter.
 class SliverGroupedList<Header, Entry> extends StatelessWidget {
   const SliverGroupedList(
-      {Key key,
-      @required this.data,
+      {Key? key,
+      required this.data,
       this.bodyHeaderPinned = false,
       this.bodyHeaderFloating = false,
       this.bodyHeaderMinHeight = _kMinHeightDim,
       this.bodyHeaderMaxHeight = _kMaxHeightDim,
-      @required this.bodyHeaderBuilder,
-      @required this.bodyEntryBuilder,
-      this.bodyPlaceholderBuilder,
+      required this.bodyHeaderBuilder,
+      required this.bodyEntryBuilder,
+      required this.bodyPlaceholderBuilder,
       this.appBar,
       this.header,
       this.footer,
@@ -90,44 +90,38 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
 
   /// [appBar] provide additional Sliver related widget to
   /// display content above header as an app bar.
-  final Widget appBar;
+  final Widget? appBar;
 
   /// [header] provide additional Sliver related widget to
   /// display content above body.
-  final RenderObjectWidget header;
+  final RenderObjectWidget? header;
 
   /// [footer] provide additional Sliver related widget to
   /// display content under body.
-  final RenderObjectWidget footer;
+  final RenderObjectWidget? footer;
 
   /// Properties of [CustomScrollView]
   final Axis scrollDirection;
   final bool reverse;
-  final ScrollController controller;
-  final bool primary;
-  final ScrollPhysics physics;
+  final ScrollController? controller;
+  final bool? primary;
+  final ScrollPhysics? physics;
   final bool shrinkWrap;
-  final Key center;
+  final Key? center;
   final double anchor;
-  final double cacheExtent;
-  final int semanticChildCount;
+  final double? cacheExtent;
+  final int? semanticChildCount;
   final DragStartBehavior dragStartBehavior = DragStartBehavior.start;
 
   @override
   Widget build(BuildContext context) {
-    assert(data != null,
-        '$runtimeType Data should not be null, please provide valid Data');
-    assert(bodyHeaderBuilder != null,
-        '$runtimeType headerBuilder should not be null');
-    assert(bodyEntryBuilder != null,
-        '$runtimeType runtimeType should not be null');
     return Builder(builder: (context) {
       var widgetList = <Widget>[];
       if (appBar != null) {
-        widgetList.add(appBar);
+        widgetList.add(appBar!);
       }
       if (header != null) {
-        widgetList.add(header);
+        widgetList.add(header!);
       }
       data.forEach((key, value) {
         widgetList
@@ -145,7 +139,7 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
                           bodyPlaceholderBuilder(context, key))));
       });
       if (footer != null) {
-        widgetList.add(footer);
+        widgetList.add(footer!);
       }
       return CustomScrollView(
         scrollDirection: scrollDirection,
@@ -174,9 +168,11 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
 /// to call [onItemTap] callback if [GestureDetector] detects
 /// onTap event
 class _SliverGroupedEntry<Entry> extends StatelessWidget {
-  const _SliverGroupedEntry(
-      {Key key, @required this.entry, @required this.builder})
-      : super(key: key);
+  const _SliverGroupedEntry({
+    Key? key,
+    required this.entry,
+    required this.builder,
+  }) : super(key: key);
 
   /// [entry] is mandatory and should not be null
   /// assertion is used to check the nullability of the
@@ -190,10 +186,6 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(entry != null,
-        '$runtimeType List<Entry> should not be null, please provide valid List<Entry>');
-    assert(builder != null,
-        '$runtimeType builder should not be null for creating a dynamic grouped list');
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
         final item = entry[index];
@@ -206,14 +198,14 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
 /// A wrapper above [_SliverHeaderDelegate]
 ///
 class _SliverGroupedHeader extends StatelessWidget {
-  const _SliverGroupedHeader(
-      {Key key,
-      @required this.minHeight,
-      @required this.maxHeight,
-      @required this.child,
-      this.pinned,
-      this.floating})
-      : super(key: key);
+  const _SliverGroupedHeader({
+    Key? key,
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+    this.pinned = false,
+    this.floating = false,
+  }) : super(key: key);
 
   final double minHeight;
   final double maxHeight;
@@ -243,9 +235,9 @@ class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
 
   _SliverHeaderDelegate({
-    @required this.minHeight,
-    @required this.maxHeight,
-    @required this.child,
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
   });
 
   @override
