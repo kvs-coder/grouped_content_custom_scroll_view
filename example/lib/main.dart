@@ -32,7 +32,7 @@ class MyHomePage extends StatelessWidget {
         data: {
           'A': ['My best friend', 'Good friend of mine', 'Guy I do not know'],
           'B': ['My cat', 'My dog', 'My fish', 'My bird'],
-          'C': ['My mom', 'My dad', 'My sis']
+          'C': []
         },
         appBar: SliverAppBar(
           title: Text('SliverAppBar'),
@@ -65,6 +65,15 @@ class MyHomePage extends StatelessWidget {
           ),
           color: Colors.blue,
         ),
+        bodyPlaceholderBuilder: (_) => Card(
+            color: Colors.lightBlueAccent,
+            child: Container(
+                height: _kHeight,
+                alignment: Alignment.center,
+                child: Text(
+                  "There are no items available",
+                  style: TextStyle(color: Colors.grey),
+                ))),
         bodyEntryBuilder: (_, index, item) => GestureDetector(
           onTap: () {
             print(item);
