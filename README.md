@@ -99,6 +99,15 @@ class MyHomePage extends StatelessWidget {
           ),
           color: Colors.blue,
         ),
+        bodyPlaceholderBuilder: (_, header) => Card(
+              color: Colors.lightBlueAccent,
+              child: Container(
+                  height: _kHeight,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "There are no items available",
+                    style: TextStyle(color: Colors.grey),
+                  ))),
         bodyEntryBuilder: (_, index, item) => GestureDetector(
           onTap: () {
             print(item);

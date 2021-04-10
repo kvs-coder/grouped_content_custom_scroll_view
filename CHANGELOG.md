@@ -30,3 +30,7 @@
 ## [1.1.1] - 05.10.2020.
 
 * SliverAppBar support
+
+## [1.1.2] - 10.04.2021.
+
+* Add _bodyPlaceholderBuilder_
