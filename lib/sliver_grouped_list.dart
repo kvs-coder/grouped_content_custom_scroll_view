@@ -80,7 +80,8 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
 
   /// [bodyPlaceholderBuilder] will be used when no elements are available
   /// for a certain key
-  final Widget Function(BuildContext context) bodyPlaceholderBuilder;
+  final Widget Function(BuildContext context, Header header)
+      bodyPlaceholderBuilder;
 
   /// [data] is mandatory and should not be null
   /// assertion is used to check the nullability of the
@@ -139,7 +140,9 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
           ..add(value.length > 0
               ? _SliverGroupedEntry(entry: value, builder: bodyEntryBuilder)
               : SliverToBoxAdapter(
-                  child: Builder(builder: bodyPlaceholderBuilder)));
+                  child: Builder(
+                      builder: (context) =>
+                          bodyPlaceholderBuilder(context, key))));
       });
       if (footer != null) {
         widgetList.add(footer);

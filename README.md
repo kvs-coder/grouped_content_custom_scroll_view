@@ -99,7 +99,7 @@ class MyHomePage extends StatelessWidget {
           ),
           color: Colors.blue,
         ),
-        bodyPlaceholderBuilder: (_) => Card(
+        bodyPlaceholderBuilder: (_, header) => Card(
               color: Colors.lightBlueAccent,
               child: Container(
                   height: _kHeight,
