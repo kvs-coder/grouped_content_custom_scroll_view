@@ -6,7 +6,17 @@ import 'package:flutter/material.dart';
 const double _kMaxHeightDim = 50.0;
 const double _kMinHeightDim = 40.0;
 
-/// A [SliverGroupedList] list which wraps a [CustomScrollView]
+class GroupedContentData<Header, Entry> {
+  const GroupedContentData({
+    required this.header,
+    required this.entries,
+  });
+
+  final Header header;
+  final List<Entry> entries;
+}
+
+/// A [GroupedContentCustomScrollView] list which wraps a [CustomScrollView]
 /// providing created [_SliverGroupedHeader] and [_SliverGroupedEntry] slivers
 ///
 /// [Builder] is used to create a list of [Widget] and set
@@ -18,13 +28,13 @@ const double _kMinHeightDim = 40.0;
 ///
 /// [data] is based on provided [Header] and [Entry] types.
 ///
-/// To build a [SliverGroupedList] the [Header] and [Entry] types
+/// To build a [GroupedContentCustomScrollView] the [Header] and [Entry] types
 /// should be explicitly showed like [SliverGroupedList<String, String>]
 ///
 /// Every item of the sliver list handles [onItemTap] event providing
 /// the tapped item as a parameter.
-class SliverGroupedList<Header, Entry> extends StatelessWidget {
-  const SliverGroupedList(
+class GroupedContentCustomScrollView<Header, Entry> extends StatelessWidget {
+  const GroupedContentCustomScrollView(
       {Key? key,
       required this.data,
       this.bodyHeaderPinned = false,
@@ -33,7 +43,6 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
       this.bodyHeaderMaxHeight = _kMaxHeightDim,
       required this.bodyHeaderBuilder,
       required this.bodyEntryBuilder,
-      required this.bodyPlaceholderBuilder,
       this.appBar,
       this.header,
       this.footer,
@@ -78,15 +87,10 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
   final Widget Function(BuildContext context, int index, Entry item)
       bodyEntryBuilder;
 
-  /// [bodyPlaceholderBuilder] will be used when no elements are available
-  /// for a certain key
-  final Widget Function(BuildContext context, Header header)
-      bodyPlaceholderBuilder;
-
   /// [data] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  final Map<Header, List<Entry>> data;
+  final List<GroupedContentData<Header, Entry>> data;
 
   /// [appBar] provide additional Sliver related widget to
   /// display content above header as an app bar.
@@ -123,20 +127,23 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
       if (header != null) {
         widgetList.add(header!);
       }
-      data.forEach((key, value) {
+      data.forEach((content) {
         widgetList
-          ..add(_SliverGroupedHeader(
-              minHeight: bodyHeaderMinHeight,
-              maxHeight: bodyHeaderMaxHeight,
-              pinned: bodyHeaderPinned,
-              floating: bodyHeaderFloating,
-              child: bodyHeaderBuilder(context, key)))
-          ..add(value.length > 0
-              ? _SliverGroupedEntry(entry: value, builder: bodyEntryBuilder)
-              : SliverToBoxAdapter(
-                  child: Builder(
-                      builder: (context) =>
-                          bodyPlaceholderBuilder(context, key))));
+          ..add(
+            _SliverGroupedHeader(
+                minHeight: bodyHeaderMinHeight,
+                maxHeight: bodyHeaderMaxHeight,
+                pinned: bodyHeaderPinned,
+                floating: bodyHeaderFloating,
+                header: content.header,
+                builder: bodyHeaderBuilder),
+          )
+          ..add(
+            _SliverGroupedEntry(
+              entries: content.entries,
+              builder: bodyEntryBuilder,
+            ),
+          );
       });
       if (footer != null) {
         widgetList.add(footer!);
@@ -170,14 +177,14 @@ class SliverGroupedList<Header, Entry> extends StatelessWidget {
 class _SliverGroupedEntry<Entry> extends StatelessWidget {
   const _SliverGroupedEntry({
     Key? key,
-    required this.entry,
+    required this.entries,
     required this.builder,
   }) : super(key: key);
 
-  /// [entry] is mandatory and should not be null
+  /// [entries] is mandatory and should not be null
   /// assertion is used to check the nullability of the
   /// property and will show a stacktrace
-  final List<Entry> entry;
+  final List<Entry> entries;
 
   /// [builder] is mandatory and should not be null
   /// assertion is used to check the nullability of the
@@ -188,28 +195,39 @@ class _SliverGroupedEntry<Entry> extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        final item = entry[index];
+        final item = entries[index];
         return builder(context, index, item);
-      }, childCount: entry.length),
+      }, childCount: entries.length),
     );
   }
 }
 
 /// A wrapper above [_SliverHeaderDelegate]
 ///
-class _SliverGroupedHeader extends StatelessWidget {
+class _SliverGroupedHeader<Header> extends StatelessWidget {
   const _SliverGroupedHeader({
     Key? key,
     required this.minHeight,
     required this.maxHeight,
-    required this.child,
+    required this.header,
+    required this.builder,
     this.pinned = false,
     this.floating = false,
   }) : super(key: key);
 
   final double minHeight;
   final double maxHeight;
-  final Widget child;
+
+  /// [entries] is mandatory and should not be null
+  /// assertion is used to check the nullability of the
+  /// property and will show a stacktrace
+  final Header header;
+
+  /// [builder] is mandatory and should not be null
+  /// assertion is used to check the nullability of the
+  /// property and will show a stacktrace
+  final Widget Function(BuildContext context, Header item) builder;
+
   final bool pinned;
   final bool floating;
 
@@ -221,7 +239,10 @@ class _SliverGroupedHeader extends StatelessWidget {
         delegate: _SliverHeaderDelegate(
           minHeight: minHeight,
           maxHeight: maxHeight,
-          child: child,
+          builder: (context) {
+            final item = header;
+            return builder(context, item);
+          },
         ));
   }
 }
@@ -232,12 +253,12 @@ class _SliverGroupedHeader extends StatelessWidget {
 class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
-  final Widget child;
+  final Widget Function(BuildContext) builder;
 
   _SliverHeaderDelegate({
     required this.minHeight,
     required this.maxHeight,
-    required this.child,
+    required this.builder,
   });
 
   @override
@@ -248,13 +269,13 @@ class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child);
+    return SizedBox.expand(child: builder(context));
   }
 
   @override
   bool shouldRebuild(_SliverHeaderDelegate oldDelegate) {
     return maxHeight != oldDelegate.maxHeight ||
         minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
+        builder != oldDelegate.builder;
   }
 }

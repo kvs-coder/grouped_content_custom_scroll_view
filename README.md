@@ -1,4 +1,4 @@
-# sliver_grouped_list
+# grouped_content_custom_scroll_view
 
 SliverGroupedList Widget
 
@@ -12,7 +12,7 @@ Build a beautiful sliver with a custom header, footer and body, which can be div
 - Add this to your package's pubspec.yaml file: 
 ``` Dart
 dependencies:
-     sliver_grouped_list: ^1.0.4
+     grouped_content_custom_scroll_view: ^1.0.4
 ```
 - Run <b>flutter pub get</b>
 
@@ -20,7 +20,7 @@ dependencies:
 
 Go to your widget .dart file and do import
 ``` Dart
-import 'package:sliver_grouped_list/sliver_grouped_list.dart';
+import 'package:grouped_content_custom_scroll_view/grouped_content_custom_scroll_view.dart';
 ```
 Inside your widget's <b>Widget build(BuildContext context)</b> method
 set as body the <b>SliverGroupedList</b> with explicitly showing the types of bodyHeader and bodyEntry.
@@ -38,10 +38,20 @@ Here is an example which is displayed in the GIF from above.
 
 ``` Dart
 import 'package:flutter/material.dart';
-import 'package:sliver_grouped_list/sliver_grouped_list.dart';
+import 'package:grouped_content_custom_scroll_view/grouped_content_custom_scroll_view.dart';
 
 void main() {
   runApp(MyApp());
+}
+
+class MyData {
+  const MyData(
+    this.header,
+    this.entries,
+  );
+
+  final int header;
+  final List<String> entries;
 }
 
 class MyApp extends StatelessWidget {
@@ -63,16 +73,25 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final myDataList = [
+      MyData(0, ['My best friend', 'Good friend of mine', 'Guy I do not know']),
+      MyData(1, ['My cat', 'My dog', 'My fish', 'My bird']),
+      MyData(2, []),
+    ]
+        .map((e) => GroupedContentData<int, String>(
+            header: e.header, entries: e.entries))
+        .toList();
     return Scaffold(
       appBar: AppBar(
         title: Text('Example'),
       ),
-      body: SliverGroupedList<String, String>(
-        data: {
-          'A': ['My best friend', 'Good friend of mine', 'Guy I do not know'],
-          'B': ['My cat', 'My dog', 'My fish', 'My bird'],
-          'C': ['My mom', 'My dad', 'My sis']
-        },
+      body: GroupedContentCustomScrollView<int, String>(
+        data: myDataList,
+        appBar: SliverAppBar(
+          title: Text('SliverAppBar'),
+          backgroundColor: Colors.green,
+          expandedHeight: 200.0,
+        ),
         header: SliverGrid.count(
           crossAxisCount: 3,
           children: [
@@ -94,20 +113,11 @@ class MyHomePage extends StatelessWidget {
         bodyHeaderBuilder: (_, header) => Container(
           alignment: Alignment.center,
           child: Text(
-            header,
+            '$header',
             style: TextStyle(color: Colors.white),
           ),
           color: Colors.blue,
         ),
-        bodyPlaceholderBuilder: (_, header) => Card(
-              color: Colors.lightBlueAccent,
-              child: Container(
-                  height: _kHeight,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "There are no items available",
-                    style: TextStyle(color: Colors.grey),
-                  ))),
         bodyEntryBuilder: (_, index, item) => GestureDetector(
           onTap: () {
             print(item);
@@ -142,7 +152,7 @@ class MyHomePage extends StatelessWidget {
 }
 ```
 ## License
-Under <a href=https://github.com/VictorKachalov/sliver_grouped_list/blob/master/LICENSE>MIT License</a>
+Under <a href=https://github.com/VictorKachalov/grouped_content_custom_scroll_view/blob/master/LICENSE>MIT License</a>
 
 ## Donation
 If you think that my repo helped you to solve the issues you struggle with, please don't be shy and donate :-)

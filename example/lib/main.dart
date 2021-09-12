@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sliver_grouped_list/sliver_grouped_list.dart';
+import 'package:grouped_content_custom_scroll_view/grouped_content_custom_scroll_view.dart';
 
 void main() {
   runApp(MyApp());
+}
+
+class MyData {
+  const MyData(
+    this.header,
+    this.entries,
+  );
+
+  final int header;
+  final List<String> entries;
 }
 
 class MyApp extends StatelessWidget {
@@ -24,16 +34,20 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final myDataList = [
+      MyData(0, ['My best friend', 'Good friend of mine', 'Guy I do not know']),
+      MyData(1, ['My cat', 'My dog', 'My fish', 'My bird']),
+      MyData(2, []),
+    ]
+        .map((e) => GroupedContentData<int, String>(
+            header: e.header, entries: e.entries))
+        .toList();
     return Scaffold(
       appBar: AppBar(
         title: Text('Example'),
       ),
-      body: SliverGroupedList<String, String>(
-        data: {
-          'A': ['My best friend', 'Good friend of mine', 'Guy I do not know'],
-          'B': ['My cat', 'My dog', 'My fish', 'My bird'],
-          'C': []
-        },
+      body: GroupedContentCustomScrollView<int, String>(
+        data: myDataList,
         appBar: SliverAppBar(
           title: Text('SliverAppBar'),
           backgroundColor: Colors.green,
@@ -60,20 +74,11 @@ class MyHomePage extends StatelessWidget {
         bodyHeaderBuilder: (_, header) => Container(
           alignment: Alignment.center,
           child: Text(
-            header,
+            '$header',
             style: TextStyle(color: Colors.white),
           ),
           color: Colors.blue,
         ),
-        bodyPlaceholderBuilder: (_, header) => Card(
-            color: Colors.lightBlueAccent,
-            child: Container(
-                height: _kHeight,
-                alignment: Alignment.center,
-                child: Text(
-                  "There are no items available in $header",
-                  style: TextStyle(color: Colors.grey),
-                ))),
         bodyEntryBuilder: (_, index, item) => GestureDetector(
           onTap: () {
             print(item);

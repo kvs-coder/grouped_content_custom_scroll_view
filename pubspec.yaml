@@ -1,7 +1,7 @@
-name: sliver_grouped_list
+name: grouped_content_custom_scroll_view
 description: SliverGroupedList Widget. Build a beautiful Table based on Sliver Widgets with entries group by headers.
 version: 1.1.2-nullsafety.0
-homepage: https://github.com/VictorKachalov/sliver_grouped_list
+homepage: https://github.com/VictorKachalov/grouped_content_custom_scroll_view
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

@@ -67,6 +67,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  grouped_content_custom_scroll_view:
+    dependency: "direct dev"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "1.1.2-nullsafety.0"
   matcher:
     dependency: transitive
     description:
@@ -93,13 +100,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  sliver_grouped_list:
-    dependency: "direct dev"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "1.1.2"
   source_span:
     dependency: transitive
     description:
